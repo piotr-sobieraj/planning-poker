@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Planning Poker</title>
+</head>
+<body>
+    <h1>Planning Poker - results</h1>
+    
+    <h2>Voting list</h2>
+    <ul id="results-list">
+        <!-- Wyniki będą tutaj dynamicznie dodawane przez JavaScript -->
+    </ul>
+    
+    <!-- Formularz do resetowania wyników -->
+    <form method="POST" action="/reset">
+        <button type="submit">Reset</button>
+    </form>
+
+    <script>
+        // Funkcja do pobierania wyników z serwera i aktualizacji listy
+        function fetchResults() {
+            fetch('/get_results')
+                .then(response => response.json())
+                .then(data => {
+                    const resultsList = document.getElementById('results-list');
+                    resultsList.innerHTML = ''; // Czyszczenie listy
+                    
+                    // Dodawanie każdego wyniku do listy
+                    data.forEach(result => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${result.name}: ${result.points}`;
+                        resultsList.appendChild(listItem);
+                    });
+                });
+        }
+
+        // Ustawienie interwału do pobierania wyników co 5 sekund
+        setInterval(fetchResults, 5000);
+
+        // Pierwsze wywołanie funkcji po załadowaniu strony
+        fetchResults();
+    </script>
+</body>
+</html>
