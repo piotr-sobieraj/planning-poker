@@ -6,26 +6,27 @@
 </head>
 <body>
     <h1>Planning Poker</h1>
-
+    
     <!-- Formularz do wprowadzania imienia i liczby punktów -->
     <form method="POST" action="/">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="points">Story points:</label>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="{{ name }}" required>
+        
+        <label for="points">Points:</label>
         <select id="points" name="points" required>
+            <option value="None">-</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="8">8</option>
             <option value="13">13</option>
-            <option value="21">21</option>  
-            <option value="100">100</option>
-            <option value="Coffee">Coffee</option>
+            <option value="21">21</option>
+            <option value="21">100</option>
+            <option value="21">Coffee</option>
 
         </select>
-
+        
         <button type="submit">Vote</button>
     </form>
 </body>
