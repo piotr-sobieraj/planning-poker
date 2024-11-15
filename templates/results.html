@@ -9,7 +9,7 @@
     
     <h2>Voting list</h2>
     <ul id="results-list">
-        <!-- Wyniki będą tutaj dynamicznie dodawane przez JavaScript -->
+        <!-- Wyniki są dodawane przez JavaScript -->
     </ul>
     
     <!-- Formularz do resetowania wyników -->
@@ -26,7 +26,7 @@
                     const resultsList = document.getElementById('results-list');
                     resultsList.innerHTML = ''; // Czyszczenie listy
                     
-                    // Dodawanie każdego wyniku do listy
+                    // Dodawanie wyników do listy
                     data.forEach(result => {
                         const listItem = document.createElement('li');
                         listItem.textContent = `${result.name}: ${result.points}`;
@@ -35,8 +35,8 @@
                 });
         }
 
-        // Ustawienie interwału do pobierania wyników co 5 sekund
-        setInterval(fetchResults, 5000);
+        // Ustawienie interwału do pobierania wyników co sekundę
+        setInterval(fetchResults, 1000);
 
         // Pierwsze wywołanie funkcji po załadowaniu strony
         fetchResults();

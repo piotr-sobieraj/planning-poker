@@ -30,7 +30,7 @@ def client_form():
 def results_view():
   return render_template('results.html')
 
-# Endpoint do pobierania wyników w formacie JSON
+# Endpoint do pobierania wyników 
 @app.route('/get_results', methods=['GET'])
 def get_results():
   return jsonify(results)
