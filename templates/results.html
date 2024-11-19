@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Planning Poker</title>
+    <title>Planning Poker - results</title>
 </head>
 <body>
     <h1>Planning Poker - results</h1>
     
-    <h2>Voting list</h2>
-    <ul id="results-list">
+    <h3 id="waiting-message">Waiting for all voters...</h3>
+    <ul id="results-list" style="display: none;">
         <!-- Wyniki są dodawane przez JavaScript -->
     </ul>
     
@@ -24,14 +24,31 @@
                 .then(response => response.json())
                 .then(data => {
                     const resultsList = document.getElementById('results-list');
-                    resultsList.innerHTML = ''; // Czyszczenie listy
-                    
-                    // Dodawanie wyników do listy
-                    data.forEach(result => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${result.name}: ${result.points}`;
-                        resultsList.appendChild(listItem);
-                    });
+                    const waitingMessage = document.getElementById('waiting-message');
+
+                    // Czyszczenie listy
+                    resultsList.innerHTML = '';
+
+                    // Sprawdzenie liczby głosów
+                    const noVoters = data.no_voters; // Wymagana liczba głosów
+                    const votes = data.votes; // Liczba oddanych głosów
+
+                    if (votes >= noVoters) {
+                        // Wyświetl wyniki, jeśli wszyscy zagłosowali
+                        waitingMessage.style.display = 'none';
+                        resultsList.style.display = 'block';
+
+                        data.results.forEach(result => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `${result.name}: ${result.points}`;
+                            resultsList.appendChild(listItem);
+                        });
+                    } else {
+                        // Ukryj wyniki, jeśli głosowanie trwa
+                        waitingMessage.style.display = 'block';
+                        waitingMessage.textContent = `Waiting for all voters (${votes}/${noVoters})...`;
+                        resultsList.style.display = 'none';
+                    }
                 });
         }
 
